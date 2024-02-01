@@ -85,8 +85,13 @@ jobs:
     - name: Install Dependencies
       run: npm install
 
+    - name: Run tests
+      run: npm test
+
     - name: Build
       run: npm run build
+
+
 
   security:
     runs-on: ubuntu-latest
@@ -115,13 +120,15 @@ jobs:
 
     - name: Run Snyk Scan
       run: snyk test
+      
+    - name: Run Snyk Test (Dependency Scanning)
+      run: snyk test
 
-    - name: Install Renovate
-      run: |
-        sudo npm install -g renovate
-
-    - name: Run Renovate
-      run: renovate --token ${{ secrets.RENOVATE_TOKEN }}
+    - name: Upload Snyk Test Results
+      uses: snyk/actions/scan@v2
+      with:
+        fail-on-issues: true
+   
 
     - name: Deploy to Production
       run: |

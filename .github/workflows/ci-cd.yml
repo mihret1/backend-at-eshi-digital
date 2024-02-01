@@ -31,7 +31,7 @@ jobs:
        
     - name: Run Arachni Scan
       run: |
-        arachni http://your-app-url --report-save-path=arachni_report.afr
+        arachni http://localhost:3500 --report-save-path=arachni_report.afr
 
     - name: Upload Arachni Scan Results
       uses: actions/upload-artifact@v2

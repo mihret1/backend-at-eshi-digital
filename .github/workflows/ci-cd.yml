@@ -61,7 +61,6 @@
 #         run: npm run build && npm run deploy
 
 
-
 name: CI/CD Pipeline
 
 on:
@@ -102,14 +101,17 @@ jobs:
     - name: GitHub Code Scanning
       uses: github/codeql-action@v4
 
-    - name: Install Arachni
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y arachni
+    - name: Install ZAP
+      uses: zaproxy/action-baseline@v1
 
-    - name: Run Arachni
-      run: |
-        arachni http://localhost:3500 --report-save-path=arachni_report.afr
+    - name: Start ZAP
+      run: zap-baseline.py -t http://example.com -g gen.conf -r baseline.html
+
+    - name: Publish ZAP report
+      uses: actions/upload-artifact@v2
+      with:
+          name: ZAP Report
+          path: baseline.html
 
     - name: Install Snyk CLI
       run: |

@@ -108,7 +108,7 @@ jobs:
       run: zap-baseline.py -t http://example.com -g gen.conf -r baseline.html
 
     - name: Publish ZAP report
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
           name: ZAP Report
           path: baseline.html
